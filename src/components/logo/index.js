@@ -6,7 +6,7 @@ const Logo = () => {
   return (
     <div>
       <br></br>
-      {/* Instagram Logo */}
+      {/* Logo */}
       <Imgcss src={logo} alt='logo' />
     </div>
   )
