@@ -47,11 +47,19 @@ const CarousalPage5 = styled.div`
     url('https://c1.iggcdn.com/indiegogo-media-prod-cld/image/upload/f_auto/v1608750044/ogmigx3rbohk3dsjkalk.jpg');
 `
 
+const TitleSpan = styled.span`
+  margin: 5%;
+  font-size: 20px;
+  font-size: 700;
+`
+const DetailSpan = styled.span`
+  margin: 5%;
+`
 const Caroussel = () => {
   return (
     <div>
       <Carousel
-        style={{ marginTop: '-16px', padding: '10px' }}
+        //style={{ marginTop: '-16px', padding: '10px', margin: 'auto' }}
         effect='fade'
         dots={null}
         autoplay
@@ -68,24 +76,16 @@ const Caroussel = () => {
             <br />
             <br />
             <br />
-            <span
-              style={{
-                margin: '5%',
-                fontSize: '20px',
-                fontWeight: '700'
-              }}
-            >
+            <TitleSpan>
               Olive Pro - Appareils auditifs et oreillettes Bluetooth 2 en 1
-            </span>
+            </TitleSpan>
             <br />
-            <span style={{ margin: '5%' }}>
+            <DetailSpan>
               Une audition améliorée pour les sons, la musique et les
               conversations.
-            </span>
+            </DetailSpan>
             <br />
-            <span style={{ margin: '5%' }}>
-              Une audition abordable pour tous.
-            </span>
+            <DetailSpan>Une audition abordable pour tous.</DetailSpan>
           </CarousalPage1>
         </div>
         {/* Carousal Page 2 */}
@@ -100,24 +100,16 @@ const Caroussel = () => {
             <br />
             <br />
             <br />
-            <span
-              style={{
-                margin: '5%',
-                fontSize: '20px',
-                fontWeight: '700'
-              }}
-            >
+            <TitleSpan>
               inCharge X - Le couteau suisse des câbles de 100W
-            </span>
+            </TitleSpan>
             <br />
-            <span style={{ margin: '5%' }}>
+            <DetailSpan>
               Le câble le plus financé par le crowdfunding est de retour !
               Minuscule,
-            </span>
+            </DetailSpan>
             <br />
-            <span style={{ margin: '5%' }}>
-              Universel, Câble ultra puissant.
-            </span>
+            <DetailSpan>Universel, Câble ultra puissant.</DetailSpan>
           </CarousalPage2>
         </div>
         {/* Carousal Page 3 */}
@@ -132,25 +124,19 @@ const Caroussel = () => {
             <br />
             <br />
             <br />
-            <span
-              style={{
-                margin: '5%',
-                fontSize: '20px',
-                fontWeight: '700'
-              }}
-            >
+            <TitleSpan>
               Aura Mate Pro - Le meilleur scanner Premium mis à jour à ce jour
-            </span>
+            </TitleSpan>
             <br />
-            <span style={{ margin: '5%' }}>
+            <DetailSpan>
               Double appareil photo, Appareil photo pour documents, Utilisation
               avec zoom, 16 MegaPixel.
-            </span>
+            </DetailSpan>
             <br />
-            <span style={{ margin: '5%' }}>
+            <DetailSpan>
               Technologie d'aplatissement des courbes, Numérisation d'un livre
               en 8 minutes.
-            </span>
+            </DetailSpan>
           </CarousalPage3>
         </div>
         {/* Carousal Page 4 */}
@@ -165,24 +151,18 @@ const Caroussel = () => {
             <br />
             <br />
             <br />
-            <span
-              style={{
-                margin: '5%',
-                fontSize: '20px',
-                fontWeight: '700'
-              }}
-            >
+            <TitleSpan>
               Phantom - Le skateboard électrique à entraînement direct
-            </span>
+            </TitleSpan>
             <br />
-            <span style={{ margin: '5%' }}>
+            <DetailSpan>
               30 MPH, 48 km d'autonomie. Nouvelle génération de 21700 Lithium
-            </span>
+            </DetailSpan>
             <br />
-            <span style={{ margin: '5%' }}>
+            <DetailSpan>
               Une batterie et un pont de chute en fibre de carbone sur lesquels
               vous pouvez compter.
-            </span>
+            </DetailSpan>
           </CarousalPage4>
         </div>
         {/* Carousal Page 5 */}
@@ -197,29 +177,20 @@ const Caroussel = () => {
             <br />
             <br />
             <br />
-            <span
-              style={{
-                margin: '5%',
-                fontSize: '20px',
-                fontWeight: '700'
-              }}
-            >
+            <TitleSpan>
               Flynova Pro - Boomerang spinner avec des tours infinis !
-            </span>
+            </TitleSpan>
             <br />
-            <span style={{ margin: '5%' }}>
+            <DetailSpan>
               Lumières dynamiques｜Sécurité pour les enfants｜Résistant aux
               chocs｜
-            </span>
+            </DetailSpan>
             <br />
-            <span style={{ margin: '5%' }}>
-              Longue durée de vie de la batterie
-            </span>
+            <DetailSpan>Longue durée de vie de la batterie</DetailSpan>
           </CarousalPage5>
         </div>
       </Carousel>
     </div>
   )
 }
-
-export { Caroussel }
+export default Caroussel

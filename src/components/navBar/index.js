@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
-import logo from './logo.svg'
+import logo from '../logo/favicon.png'
 
 import './index.css'
 
@@ -11,6 +11,7 @@ const NavbarStyle = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding: 10px;
+  text-align: justify;
 
   & > * > * {
     font-weight: 600;
@@ -55,11 +56,19 @@ const Navbar = () => {
   const addProject = () => {
     history.push('/compagne')
   }
+  const Home = () => {
+    history.push('/home')
+  }
   return (
     <stylediv>
       <NavbarStyle>
+        {/* <div>
+          <img src={logo} alt='' height='auto' />
+        </div> */}
         <div>
-          <img src={logo} alt='' height='150%' />
+          <div>
+            <img src={logo} alt='' />
+          </div>
         </div>
         <div>
           <spanLogin />

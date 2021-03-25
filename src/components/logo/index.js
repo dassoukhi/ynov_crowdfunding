@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import logo from '../navBar/logo.svg'
+import logo from './favicon.png'
 
 const Logo = () => {
   return (

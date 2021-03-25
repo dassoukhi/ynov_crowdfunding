@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import data from '../../data.json'
+import React, { useState, useEffect } from 'react'
+//import data from '../../data.json'
 //import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { db } from './../../config/firebase'
 
 import white from './white.png'
 import red from './red.png'
@@ -11,6 +12,9 @@ const Card = styled.div`
     box-shadow: 1px 8px 10px grey;
     -webkit-transition: box-shadow 0.1s ease-in;
   }
+  margin: auto;
+  min-width: 600px;
+  max-width: 2000px;
 `
 const styleTextLeftH2 = styled.div`
   margin-left: 10%;
@@ -42,6 +46,8 @@ const ButtonImg = styled.img`
 // `
 
 const ProjectCard = () => {
+  const [popular, setPopular] = useState([])
+
   const username = localStorage.getItem('username')
   // eslint-disable-next-line no-unused-vars
   const [icone, setIcone] = useState()
@@ -86,13 +92,31 @@ const ProjectCard = () => {
     }
   }
 
+  useEffect(() => {
+    //console.log(db)
+    //use a firestore db to retrieve data for a post
+    db.collection('popular_projects')
+      .orderBy('timestamp', 'asc')
+      .onSnapshot(snapshot => {
+        //every time a new post is added do this
+        setPopular(
+          snapshot.docs.map(doc => ({
+            //id: doc.id,
+            popular_projects: doc.data()
+          }))
+        )
+      })
+  }, [])
+
+  //console.log('Collection ->', db.collection('popular_projects'))
   return (
     <div>
       <styleTextLeftH2>
         <h2>Les projets populaires</h2>
       </styleTextLeftH2>
       <styleContainer>
-        {data.popular_projects.map((item, index) => {
+        {popular.map((item, index) => {
+          console.log(item.popular_projects.popular_projects)
           return (
             <Card key={index}>
               <div
@@ -100,7 +124,7 @@ const ProjectCard = () => {
                   minHeight: '100%',
                   display: 'inline-block',
                   float: 'left',
-                  width: '20%',
+                  width: '50%',
                   cursor: 'pointer',
                   borderRadius: '0.2rem',
                   flexDirection: 'row',
@@ -110,8 +134,8 @@ const ProjectCard = () => {
               >
                 {/* Image du produit */}
                 <img
-                  src={item.avatar}
-                  alt={item.name}
+                  src={item.popular_projects.avatar}
+                  alt={item.popular_projects.name}
                   style={{ height: '100%', width: '100%' }}
                 />
                 {/* Détails du produit */}
@@ -125,18 +149,18 @@ const ProjectCard = () => {
                       src={getIcone({
                         index,
                         username
-                        // item.name,
-                        // item.description,
-                        // item.avatar
+                        // item.popular_projects.name,
+                        // item.popular_projects.description,
+                        // item.popular_projects.avatar
                       })}
                       // pass all data to store into favorites then use it to print into /favorites
                       onClick={() =>
                         addInStorage({
                           index,
                           username
-                          // item.name,
-                          // item.description,
-                          // item.avatar
+                          // item.popular_projects.name,
+                          // item.popular_projects.description,
+                          // item.popular_projects.avatar
                         })
                       }
                     ></ButtonImg>
@@ -148,14 +172,14 @@ const ProjectCard = () => {
                     }}
                   >
                     {/* Print le nom */}
-                    {item.name}
+                    {item.popular_projects.name}
                   </h5>
                   {/* Print la description */}
                   <p style={{ fontSize: '12px', textAlign: 'justify' }}>
-                    {item.description}
+                    {item.popular_projects.description}
                   </p>
                   {/* Print le prix */}
-                  <p>{item.price}</p>
+                  <p>{item.popular_projects.price}</p>
                   {/* Print le pourcentage */}
                   <div
                     style={{
@@ -163,12 +187,12 @@ const ProjectCard = () => {
                       float: 'right'
                     }}
                   >
-                    {item.percentage}
+                    {item.popular_projects.percentage}
                   </div>
                   {/* Print bar de progression */}
                   <hr
                     style={{
-                      width: '200px',
+                      width: '100%',
                       clear: 'both',
                       border: '4px solid #34ca96',
                       borderRadius: '4px'
@@ -182,7 +206,7 @@ const ProjectCard = () => {
                       textAlign: 'center'
                     }}
                   >
-                    {item.no_of_days_left}
+                    {item.popular_projects.no_of_days_left}
                   </div>
                 </div>
               </div>
@@ -190,6 +214,17 @@ const ProjectCard = () => {
           )
         })}
       </styleContainer>
+      {/* <styleContainer>
+        {popular.map((post => {
+          console.log(post)
+          return (
+            // eslint-disable-next-line react/jsx-key
+            <div>
+              <p>{post.name}</p>
+            </div>
+          )
+        })}
+      </styleContainer> */}
     </div>
   )
 }

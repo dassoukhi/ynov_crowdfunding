@@ -19,6 +19,9 @@ const FooterStyle = styled.div`
   bottom: 50;
   left: 0;
   padding: 60px 10px;
+  margin: auto;
+  //min-width: 600px;
+  //max-width: 2000px;
 `
 const FooterStyleDiv = styled.div`
   display: flex;

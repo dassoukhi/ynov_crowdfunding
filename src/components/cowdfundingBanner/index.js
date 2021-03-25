@@ -7,11 +7,13 @@ import right from './crowdRight.png'
 const BannerStyle = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 20px 13%;
-  width: auto;
+  //margin: 20px 13%;
+  width: 100%;
 `
 const Stylediv = styled.div`
-  margin: 30px 50px;
+  //margin: 30px 50px;
+  margin: auto;
+  height: 30%;
 `
 const StyleP1 = styled.p`
   font-size: 18px;
@@ -48,4 +50,4 @@ const CrowdfundingBanner = () => {
   )
 }
 
-export { CrowdfundingBanner }
+export default CrowdfundingBanner
