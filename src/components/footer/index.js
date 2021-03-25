@@ -20,6 +20,11 @@ const FooterStyle = styled.div`
   left: 0;
   padding: 60px 10px;
 `
+const FooterStyleDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`
 
 const FooterList = styled.div`
   text-align: left;
@@ -27,6 +32,9 @@ const FooterList = styled.div`
   flex-direction: column;
   margin: 0px 50px;
   font-size: 17px;
+`
+const FooterListDiv = styled.div`
+  color: grey;
 `
 
 const FooterCard = styled.div`
@@ -51,27 +59,33 @@ const BottomIcon = styled.div`
   }
 `
 
+const EnregistrerButton = styled.button`
+  color: white;
+  background-color: #ff0f00;
+  border: none;
+  padding: 12px;
+  width: 200px;
+`
+
+const InputAdr = styled.input`
+  padding: 12px;
+  width: 200px;
+`
+
 const Footer = () => {
   return (
     <div>
       <FooterStyle>
         {/* -----Footer Top Section ------ */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center'
-          }}
-        >
+        <FooterStyleDiv>
           <FooterList>
-            <div style={{ color: 'grey' }}>EXPLORER</div>
+            <FooterListDiv>EXPLORER</FooterListDiv>
             <br />
             <div>Ce que nous faisons</div>
-            <div>Financement</div>
-            <div>GoFundMe</div>
+            <div>YnovFunding financement</div>
           </FooterList>
           <FooterList>
-            <div style={{ color: 'grey' }}>A PROPOS</div>
+            <FooterListDiv>A PROPOS</FooterListDiv>
             <br />
             <div>A propos de nous</div>
             <div>Blog</div>
@@ -87,31 +101,14 @@ const Footer = () => {
               la newsletter d'YnovFunding
             </div>
             <br />
-            <input
-              placeholder='Votre adresse mail'
-              style={{ padding: '12px', width: '200px' }}
-            />
+            <InputAdr placeholder='Votre adresse mail' />
             <br />
-            <br />
-            <div
-              style={{ display: 'flex', flexDirection: 'row', margin: '-9px' }}
-            ></div>
-            <br />
-            <button
-              style={{
-                color: 'white',
-                backgroundColor: '#FF0F00',
-                border: 'none',
-                padding: '12px',
-                width: '200px'
-              }}
-            >
-              S'enregistrer
-            </button>
+            <EnregistrerButton>S'enregistrer</EnregistrerButton>
           </FooterCard>
-        </div>
+        </FooterStyleDiv>
         <br />
         {/* ---------Footer Bottom Section ---------- */}
+        {/* Icone des réseaux sociaux */}
         <BottomIcon>
           <div>
             <FacebookOutlined />
@@ -129,27 +126,11 @@ const Footer = () => {
             <LinkedinFilled />
           </div>
         </BottomIcon>
-        <hr style={{ color: '#dddddd', width: '60%' }} />
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            width: '60%',
-            justifyContent: 'space-around',
-            marginLeft: '20%'
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              fontSize: '15px',
-              marginLeft: '20%'
-            }}
-          >
-            <div style={{ margin: '10px' }}>
-              © 2021 YnovFunding. Tous droits réservés
-            </div>
+        {/* Droite noir en footer */}
+        <hr style={{ color: '#dddddd', width: '100%' }} />
+        <div>
+          <div>
+            <div>© 2021 YnovFunding. Tous droits réservés</div>
           </div>
         </div>
       </FooterStyle>

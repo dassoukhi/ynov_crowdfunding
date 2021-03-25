@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom'
 
 import logo from './logo.svg'
 
+import './index.css'
+
 const NavbarStyle = styled.div`
   display: flex;
   flex-direction: row;
@@ -40,13 +42,18 @@ const stylediv = styled.div`
   display: flex;
   flex-direction: row;
 `
+
 const Navbar = () => {
   const history = useHistory()
   const isToken = localStorage.getItem('token')
+  const username = localStorage.getItem('username')
   const handleLogout = () => {
     //delete all localStorage when I logout and push it into login page
     localStorage.clear()
     history.push('/')
+  }
+  const addProject = () => {
+    history.push('/compagne')
   }
   return (
     <stylediv>
@@ -60,9 +67,32 @@ const Navbar = () => {
         </div>
         <div>
           <spanLogin />
+          <Button onClick={addProject}>Ajouter un projet</Button>
+        </div>
+        <div>
+          {/* <spanLogin />
           {isToken ? (
             <Button onClick={handleLogout}>Se déconnecter</Button>
-          ) : null}
+          ) : null} */}
+
+          <nav>
+            <ul>
+              <li className='deroulant'>
+                <spanLogin />
+                {username}
+                <ul className='sous'>
+                  <li>
+                    <a href='#'>/</a>
+                  </li>
+                  <li>
+                    {isToken ? (
+                      <Button onClick={handleLogout}>Se déconnecter</Button>
+                    ) : null}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
         </div>
       </NavbarStyle>
     </stylediv>
