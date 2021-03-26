@@ -15,9 +15,10 @@ const FooterStyle = styled.div`
   background: #f5f5f5;
   height: auto;
   width: 100%;
-  position: absolute;
+  position: relative;
   bottom: 50;
   left: 0;
+  right: 0;
   padding: 60px 10px;
   margin: auto;
   //min-width: 600px;
@@ -84,25 +85,27 @@ const Footer = () => {
           <FooterList>
             <FooterListDiv>EXPLORER</FooterListDiv>
             <br />
-            <div>Ce que nous faisons</div>
-            <div>YnovFunding financement</div>
+            <h4>Ce que nous faisons</h4>
+            <h4>YnovFunding financement</h4>
           </FooterList>
           <FooterList>
             <FooterListDiv>A PROPOS</FooterListDiv>
             <br />
-            <div>A propos de nous</div>
-            <div>Blog</div>
-            <div>Contact</div>
+            <h4>A propos de nous</h4>
+            <h4>Blog</h4>
+            <h4>Contact</h4>
           </FooterList>
 
           <FooterCard>
             <div>
-              <strong> Découvrez-le en premier sur YnovFunding</strong>
+              <h2>
+                <strong> Découvrez-le en premier sur YnovFunding</strong>
+              </h2>
             </div>
-            <div>
+            <h4>
               Découvrez des produits nouveaux et astucieux dans <br />
               la newsletter d'YnovFunding
-            </div>
+            </h4>
             <br />
             <InputAdr placeholder='Votre adresse mail' />
             <br />

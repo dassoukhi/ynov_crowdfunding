@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-//import data from '../../data.json'
-//import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { db } from './../../config/firebase'
-
 import white from './white.png'
 import red from './red.png'
+import { Link } from 'react-router-dom'
 
 const Card = styled.div`
   :hover {
@@ -15,9 +13,19 @@ const Card = styled.div`
   margin: auto;
   min-width: 600px;
   max-width: 2000px;
+
+  min-height: 100%;
+  display: inline-block;
+  float: left;
+  width: 50%;
+  border-radius: 0.2rem;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 30px;
 `
 const styleTextLeftH2 = styled.div`
-  margin-left: 10%;
+  //margin-left: 10%;
+  //text-align: center;
 `
 const styleContainer = styled.div`
   display: flex;
@@ -26,8 +34,8 @@ const styleContainer = styled.div`
   padding: 20px 100px;
 `
 const ButtonImg = styled.img`
-  width: 22px;
-  height: 22px;
+  width: 30px;
+  height: 30px;
   float: right;
   margin-right: 1px;
   align: left;
@@ -45,6 +53,12 @@ const ButtonImg = styled.img`
 //   padding: '30px';
 // `
 
+const StyleImageUploadProgress = styled.progress`
+  width: 100%;
+  clear: both;
+  border: 1px solid #34ca96;
+  border-radius: 4px;
+`
 const ProjectCard = () => {
   const [popular, setPopular] = useState([])
 
@@ -57,7 +71,7 @@ const ProjectCard = () => {
     const currentFavorite = localStorage.getItem('favorite')
       ? JSON.parse(localStorage.getItem('favorite'))
       : []
-    const isPresent = currentFavorite.find(e => e.postId === post.postId)
+    const isPresent = currentFavorite.find(e => e.index === post.index)
 
     if (isPresent) {
       return red
@@ -101,7 +115,7 @@ const ProjectCard = () => {
         //every time a new post is added do this
         setPopular(
           snapshot.docs.map(doc => ({
-            //id: doc.id,
+            id: doc.id,
             popular_projects: doc.data()
           }))
         )
@@ -112,102 +126,99 @@ const ProjectCard = () => {
   return (
     <div>
       <styleTextLeftH2>
-        <h2>Les projets populaires</h2>
+        <p style={{ textAlign: 'center', fontSize: '24px' }}>
+          <strong>Les projets populaires</strong>
+        </p>
       </styleTextLeftH2>
       <styleContainer>
         {popular.map((item, index) => {
-          console.log(item.popular_projects.popular_projects)
+          console.log(item.popular_projects)
           return (
             <Card key={index}>
-              <div
-                style={{
-                  minHeight: '100%',
-                  display: 'inline-block',
-                  float: 'left',
-                  width: '50%',
-                  cursor: 'pointer',
-                  borderRadius: '0.2rem',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  padding: '30px'
-                }}
-              >
-                {/* Image du produit */}
+              {/* Image du produit */}
+              <Link key={index} to={`/project/${item.id}`}>
                 <img
                   src={item.popular_projects.avatar}
                   alt={item.popular_projects.name}
                   style={{ height: '100%', width: '100%' }}
                 />
-                {/* Détails du produit */}
-                <div style={{ height: '100px', textAlign: 'justify' }}>
-                  <div>
-                    <span style={{ color: '#268366' }}>
-                      Financement en cours
-                    </span>
+              </Link>
+              {/* Détails du produit */}
+              <div style={{ height: '100px', textAlign: 'justify' }}>
+                <div>
+                  <span style={{ color: '#268366' }}>Financement en cours</span>
 
-                    <ButtonImg
-                      src={getIcone({
+                  <ButtonImg
+                    src={getIcone({ index, username })}
+                    // pass all data to store into favorites then use it to print into /favorites
+                    onClick={() =>
+                      addInStorage({
                         index,
                         username
                         // item.popular_projects.name,
                         // item.popular_projects.description,
                         // item.popular_projects.avatar
-                      })}
-                      // pass all data to store into favorites then use it to print into /favorites
-                      onClick={() =>
-                        addInStorage({
-                          index,
-                          username
-                          // item.popular_projects.name,
-                          // item.popular_projects.description,
-                          // item.popular_projects.avatar
-                        })
-                      }
-                    ></ButtonImg>
-                  </div>
-                  <h5
-                    style={{
-                      fontSize: '14px',
-                      textAlign: 'justify'
-                    }}
-                  >
+                      })
+                    }
+                  ></ButtonImg>
+                </div>
+                <h5
+                  style={{
+                    fontSize: '14px',
+                    textAlign: 'justify'
+                  }}
+                >
+                  <Link key={index} to={`/project/${item.id}`}>
                     {/* Print le nom */}
                     {item.popular_projects.name}
-                  </h5>
-                  {/* Print la description */}
-                  <p style={{ fontSize: '12px', textAlign: 'justify' }}>
-                    {item.popular_projects.description}
-                  </p>
-                  {/* Print le prix */}
-                  <p>{item.popular_projects.price}</p>
-                  {/* Print le pourcentage */}
-                  <div
-                    style={{
-                      paddingTop: 4,
-                      float: 'right'
-                    }}
-                  >
-                    {item.popular_projects.percentage}
-                  </div>
-                  {/* Print bar de progression */}
-                  <hr
-                    style={{
-                      width: '100%',
-                      clear: 'both',
-                      border: '4px solid #34ca96',
-                      borderRadius: '4px'
-                    }}
-                  />
-                  {/* Print nombre de jour restant */}
-                  <div
-                    style={{
-                      padding: '4px 6px 0px 20px',
-                      clear: 'both',
-                      textAlign: 'center'
-                    }}
-                  >
-                    {item.popular_projects.no_of_days_left}
-                  </div>
+                  </Link>
+                </h5>
+
+                {/* Print la description */}
+                <p style={{ fontSize: '12px', textAlign: 'justify' }}>
+                  {item.popular_projects.description}
+                </p>
+                {/* Print le prix */}
+                <p>{item.popular_projects.price} €</p>
+                {/* Print le pourcentage */}
+                <div
+                  style={{
+                    paddingTop: 4,
+                    float: 'right'
+                  }}
+                >
+                  {Math.round(
+                    (item.popular_projects.price /
+                      item.popular_projects.recolte) *
+                      100
+                  )}{' '}
+                  %
+                </div>
+                {/* Print bar de progression */}
+                <StyleImageUploadProgress
+                  value={Math.round(
+                    (item.popular_projects.price /
+                      item.popular_projects.recolte) *
+                      100
+                  )}
+                  max='100'
+                />
+                {/* Print nombre de jour restant */}
+                <div
+                  style={{
+                    padding: '4px 6px 0px 20px',
+                    clear: 'both',
+                    textAlign: 'center'
+                  }}
+                >
+                  {item.popular_projects.no_of_days_left}
+                  {/* {Math.floor(
+                      item.popular_projects.deadline -
+                        item.popular_projects.timestamp
+                    ) /
+                      (1000 * 3600 * 24)} */}
+                  {/* {Math.floor(item.popular_projects.deadline) /
+                      (1000 * 3600 * 24)} */}
                 </div>
               </div>
             </Card>

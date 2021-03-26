@@ -26,10 +26,11 @@ const Login = () => {
 }
 const StyleLogo = styled.div`
   align: center;
-  position: absolute;
-  top: 30%;
+  /* position: absolute;
+  margin-left: 43%;
+  /* top: 30%;
   left: 40%;
-  transform: translate(-30%, -30%);
+  transform: translate(-30%, -30%); */
 `
 
 export default Login

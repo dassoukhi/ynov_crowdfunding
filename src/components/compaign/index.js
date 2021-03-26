@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react'
+import { useHistory } from 'react-router'
 import styled from 'styled-components'
 
 const CampaignStyle = styled.div`
@@ -11,7 +12,7 @@ const CampaignStyle = styled.div`
     margin-bottom: 25px;
   }
 `
-const CampaignCard = styled.div`
+const CampaignCard = styled.button`
   border: 1px solid lightgrey;
   margin: 10px;
   width: 450px;
@@ -25,7 +26,7 @@ const CampaignCard = styled.div`
 `
 const InfoDiv = styled.div`
   color: lightgrey;
-  font-size: 10px;
+  font-size: 12px;
   text-align: justify;
 `
 const FraisInfoDiv = styled.div`
@@ -36,28 +37,37 @@ const FraisInfoDiv = styled.div`
 
 const TitleH2 = styled.h2`
   text-align: center;
-  font-size: 24px;
+  font-size: 26px;
+`
+const TitleH1 = styled.p`
+  text-align: center;
+  font-size: 40px;
 `
 
 const Campaign = () => {
+  const history = useHistory()
+
+  const newProject = () => {
+    history.push('/compagne/addProject')
+  }
+  const newGiver = () => {
+    history.push('/compagne/gived')
+  }
   return (
     <CampaignStyle>
       <br />
       <br />
-      <h1> Bienvenue sur YnovFunding</h1>
+      <TitleH1> Bienvenue sur YnovFunding</TitleH1>
       <div>
-        <CampaignCard>
+        <CampaignCard onClick={newProject}>
           <TitleH2>Ajouter un projet</TitleH2>
-          <div>
-            YnovFunding est une plateforme de crowdfunding qui aide <br />
-            les idées à prendre vie.
-          </div>
+          <p style={{ color: 'black', fontSize: '18px', textAlign: 'center' }}>
+            YnovFunding est une plateforme de crowdfunding qui aide les idées à
+            prendre vie.
+          </p>
           <FraisInfoDiv>frais: 5%</FraisInfoDiv>
-          {/* <div>
-            <img src={logo} alt='YnovFunding' />
-          </div> */}
         </CampaignCard>
-        <CampaignCard>
+        <CampaignCard onClick={newGiver}>
           <TitleH2 style={{ marginTop: '50px' }}>Faire un don</TitleH2>
           <FraisInfoDiv>Pas de frais</FraisInfoDiv>
         </CampaignCard>
