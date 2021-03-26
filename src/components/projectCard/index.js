@@ -119,95 +119,98 @@ const ProjectCard = () => {
         {popular.map((item, index) => {
           console.log(item.popular_projects)
           return (
-            <Link key={index} to={'/project/' + item.id}>
-              <Card key={index}>
-                <div
-                  style={{
-                    minHeight: '100%',
-                    display: 'inline-block',
-                    float: 'left',
-                    width: '50%',
-                    cursor: 'pointer',
-                    borderRadius: '0.2rem',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    padding: '30px'
-                  }}
-                >
-                  {/* Image du produit */}
+            <Card key={index}>
+              <div
+                style={{
+                  minHeight: '100%',
+                  display: 'inline-block',
+                  float: 'left',
+                  width: '50%',
+                  cursor: 'pointer',
+                  borderRadius: '0.2rem',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  padding: '30px'
+                }}
+              >
+                {/* Image du produit */}
+                <Link key={index} to={'/project/' + item.id}>
                   <img
                     src={item.popular_projects.avatar}
                     alt={item.popular_projects.name}
                     style={{ height: '100%', width: '100%' }}
                   />
-                  {/* Détails du produit */}
-                  <div style={{ height: '100px', textAlign: 'justify' }}>
-                    <div>
-                      <span style={{ color: '#268366' }}>
-                        Financement en cours
-                      </span>
+                </Link>
+                {/* Détails du produit */}
+                <div style={{ height: '100px', textAlign: 'justify' }}>
+                  <div>
+                    <span style={{ color: '#268366' }}>
+                      Financement en cours
+                    </span>
 
-                      <ButtonImg
-                        src={getIcone({ index, username })}
-                        // pass all data to store into favorites then use it to print into /favorites
-                        onClick={() =>
-                          addInStorage({
-                            index,
-                            username
-                            // item.popular_projects.name,
-                            // item.popular_projects.description,
-                            // item.popular_projects.avatar
-                          })
-                        }
-                      ></ButtonImg>
-                    </div>
-                    <h5
-                      style={{
-                        fontSize: '14px',
-                        textAlign: 'justify'
-                      }}
-                    >
+                    <ButtonImg
+                      src={getIcone({ index, username })}
+                      // pass all data to store into favorites then use it to print into /favorites
+                      onClick={() =>
+                        addInStorage({
+                          index,
+                          username
+                          // item.popular_projects.name,
+                          // item.popular_projects.description,
+                          // item.popular_projects.avatar
+                        })
+                      }
+                    ></ButtonImg>
+                  </div>
+                  <h5
+                    style={{
+                      fontSize: '14px',
+                      textAlign: 'justify'
+                    }}
+                  >
+                    <Link key={index} to={'/project/' + item.id}>
                       {/* Print le nom */}
                       {item.popular_projects.name}
-                    </h5>
-                    {/* Print la description */}
-                    <p style={{ fontSize: '12px', textAlign: 'justify' }}>
-                      {item.popular_projects.description}
-                    </p>
-                    {/* Print le prix */}
-                    <p>{item.popular_projects.price}</p>
-                    {/* Print le pourcentage */}
-                    <div
-                      style={{
-                        paddingTop: 4,
-                        float: 'right'
-                      }}
-                    >
-                      {item.popular_projects.percentage}
-                    </div>
-                    {/* Print bar de progression */}
-                    <hr
-                      style={{
-                        width: '100%',
-                        clear: 'both',
-                        border: '4px solid #34ca96',
-                        borderRadius: '4px'
-                      }}
-                    />
-                    {/* Print nombre de jour restant */}
-                    <div
-                      style={{
-                        padding: '4px 6px 0px 20px',
-                        clear: 'both',
-                        textAlign: 'center'
-                      }}
-                    >
-                      {item.popular_projects.no_of_days_left}
-                    </div>
+                    </Link>
+                  </h5>
+
+                  {/* Print la description */}
+                  <p style={{ fontSize: '12px', textAlign: 'justify' }}>
+                    {item.popular_projects.description}
+                  </p>
+                  {/* Print le prix */}
+                  <p>{item.popular_projects.price}</p>
+                  {/* Print le pourcentage */}
+                  <div
+                    style={{
+                      paddingTop: 4,
+                      float: 'right'
+                    }}
+                  >
+                    {item.popular_projects.percentage}
+                  </div>
+                  {/* Print bar de progression */}
+                  <hr
+                    style={{
+                      width: '100%',
+                      clear: 'both',
+                      border: '4px solid #34ca96',
+                      borderRadius: '4px'
+                    }}
+                  />
+                  {/* Print nombre de jour restant */}
+                  <div
+                    style={{
+                      padding: '4px 6px 0px 20px',
+                      clear: 'both',
+                      textAlign: 'center'
+                    }}
+                  >
+                    {item.popular_projects.no_of_days_left}
                   </div>
                 </div>
-              </Card>
-            </Link>
+              </div>
+            </Card>
           )
         })}
       </styleContainer>

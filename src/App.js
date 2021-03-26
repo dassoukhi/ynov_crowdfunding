@@ -9,17 +9,18 @@ function App() {
     <div className='App'>
       {/* <p>crowdfunding</p> */}
       {/* When the network is down */}
-      <Offline>
+      {/* <Offline>
         <OffLineChamp />
-      </Offline>
+      </Offline> */}
       {/* When the network is on */}
-      <Online>
+      {/* <Online>
         <br />
         <br />
         <br />
         <br />
-        <Routes />
-      </Online>
+        
+      </Online> */}
+      <Routes />
     </div>
   )
 }

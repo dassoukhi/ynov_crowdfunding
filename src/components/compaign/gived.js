@@ -17,20 +17,22 @@ const Gived = () => {
       .onSnapshot(snapshot => {
         setfond(snapshot.data().montant)
       })
-
-    if (donation) {
-      db.collection('donation')
-        .doc('fonds')
-        .update('montant', Number(fond) + Number(donation))
-        .then(function () {
-          console.log('Montant successfully added!')
-        })
-        .catch(function (error) {
-          console.error('Error writing document: ', error)
-        })
-    } else {
-      alert('Vous devez remplir la case de donation')
-    }
+    setTimeout(() => {
+      console.log('This will run after 1 second!')
+      if (donation && fond) {
+        db.collection('donation')
+          .doc('fonds')
+          .update('montant', Number(fond) + Number(donation))
+          .then(function () {
+            console.log('Montant successfully added!')
+          })
+          .catch(function (error) {
+            console.error('Error writing document: ', error)
+          })
+      } else {
+        alert('Vous devez remplir la case de donation')
+      }
+    }, 2000)
   }
   return (
     <div>
