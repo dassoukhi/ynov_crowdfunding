@@ -14,8 +14,9 @@ const Detail = props => {
         setTest(snapshot.data())
       })
   }, [])
+
   if (test) {
-    console.log('he', test)
+    console.log('he', test.likes)
   }
   return <div>{test ? test.name : ''}</div>
 }

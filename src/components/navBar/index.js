@@ -46,8 +46,7 @@ const stylediv = styled.div`
 
 const Navbar = () => {
   const history = useHistory()
-  const isToken = localStorage.getItem('token')
-  const username = localStorage.getItem('username')
+  const user = JSON.parse(localStorage.getItem('user'))
   const handleLogout = () => {
     //delete all localStorage when I logout and push it into login page
     localStorage.clear()
@@ -80,7 +79,7 @@ const Navbar = () => {
         </div>
         <div>
           {/* <spanLogin />
-          {isToken ? (
+          {user ? (
             <Button onClick={handleLogout}>Se déconnecter</Button>
           ) : null} */}
 
@@ -88,13 +87,13 @@ const Navbar = () => {
             <ul>
               <li className='deroulant'>
                 <spanLogin />
-                {username}
+                {user.email}
                 <ul className='sous'>
                   <li>
                     <a href='#'>/</a>
                   </li>
                   <li>
-                    {isToken ? (
+                    {user ? (
                       <Button onClick={handleLogout}>Se déconnecter</Button>
                     ) : null}
                   </li>

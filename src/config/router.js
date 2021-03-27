@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import Login from './../screens/login'
+import SignUp from './../components/singUp'
 import Home from './../screens/home'
 import Compagne from './../screens/compagne'
 import AddProject from './../components/compaign/addProject'
@@ -19,6 +20,7 @@ const Routes = () => {
       <Switch>
         {/* Main 3 paths */}
         <Route exact path='/' component={Login}></Route>
+        <Route exact path='/signup' component={SignUp}></Route>
         <Route exact path='/home' component={Home}></Route>
         <Route path='/project/:id' component={Detail}></Route>
         <Route exact path='/compagne' component={Compagne}></Route>

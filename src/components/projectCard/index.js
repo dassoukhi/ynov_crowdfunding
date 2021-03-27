@@ -4,9 +4,8 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { db } from './../../config/firebase'
 
-import white from './white.png'
-import red from './red.png'
 import { Link } from 'react-router-dom'
+import ButtonLike from '../buttonLike'
 
 const Card = styled.div`
   :hover {
@@ -26,13 +25,6 @@ const styleContainer = styled.div`
   justify-content: space-around;
   padding: 20px 100px;
 `
-const ButtonImg = styled.img`
-  width: 22px;
-  height: 22px;
-  float: right;
-  margin-right: 1px;
-  align: left;
-`
 
 // const styleCard = styled.div`
 //   min-height: '100%';
@@ -48,50 +40,6 @@ const ButtonImg = styled.img`
 
 const ProjectCard = () => {
   const [popular, setPopular] = useState([])
-
-  const username = localStorage.getItem('username')
-  // eslint-disable-next-line no-unused-vars
-  const [icone, setIcone] = useState()
-  // Get the color of a like (red or white)
-  // Default white
-  const getIcone = post => {
-    const currentFavorite = localStorage.getItem('favorite')
-      ? JSON.parse(localStorage.getItem('favorite'))
-      : []
-    const isPresent = currentFavorite.find(e => e.index === post.index)
-
-    if (isPresent) {
-      return red
-    } else {
-      return white
-    }
-  }
-
-  //Add a post into Favorite (localStorage)
-  const addInStorage = post => {
-    const currentFavorite = localStorage.getItem('favorite')
-      ? JSON.parse(localStorage.getItem('favorite'))
-      : []
-
-    const isPresent = currentFavorite.find(e => e.index === post.index)
-    //is not present do that
-    if (!isPresent) {
-      // add the post into localstorage and change the color red (to say "I like it")
-      currentFavorite.push(post)
-      localStorage.setItem('favorite', JSON.stringify(currentFavorite))
-      setIcone(red)
-    }
-    //if it's present so do that
-    else {
-      //I did a filter to sortout the item
-      const curr = currentFavorite.filter(
-        e => e.index !== isPresent.index && e.username === isPresent.username
-      )
-      //set the element into localstorage and change the color
-      localStorage.setItem('favorite', JSON.stringify(curr))
-      setIcone(white)
-    }
-  }
 
   useEffect(() => {
     //console.log(db)
@@ -148,19 +96,7 @@ const ProjectCard = () => {
                       Financement en cours
                     </span>
 
-                    <ButtonImg
-                      src={getIcone({ index, username })}
-                      // pass all data to store into favorites then use it to print into /favorites
-                      onClick={() =>
-                        addInStorage({
-                          index,
-                          username
-                          // item.popular_projects.name,
-                          // item.popular_projects.description,
-                          // item.popular_projects.avatar
-                        })
-                      }
-                    ></ButtonImg>
+                    <ButtonLike postId={item.id} />
                   </div>
                   <h5
                     style={{

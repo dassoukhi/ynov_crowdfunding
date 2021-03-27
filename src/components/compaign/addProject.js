@@ -118,6 +118,7 @@ const AddProject = () => {
           type: 'FUNDING',
           timestamp: datetime,
           price: '€0',
+          likes: [],
           avatar: avatar
             ? avatar
             : 'https://www.zupimages.net/up/21/12/dzvs.jpg'
