@@ -3,9 +3,15 @@ import styled from 'styled-components'
 import Navbar from '../../components/navBar'
 import Footer from '../../components/footer'
 import { db } from './../../config/firebase'
+import { useHistory } from 'react-router'
 const Gived = () => {
   const [donation, setDonation] = useState(0)
   const [fond, setfond] = useState(0)
+  const history = useHistory()
+  const user = JSON.parse(localStorage.getItem('user'))
+  if (!user) {
+    history.push('/')
+  }
 
   const handleChangeDonation = e => {
     setDonation(e.target.value)

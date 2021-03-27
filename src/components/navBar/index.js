@@ -87,7 +87,7 @@ const Navbar = () => {
             <ul>
               <li className='deroulant'>
                 <spanLogin />
-                {user.email}
+                {user ? user.email : ''}
                 <ul className='sous'>
                   <li>
                     <a href='#'>/</a>

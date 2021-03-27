@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Navbar from '../../components/navBar'
 import Footer from '../../components/footer'
 import { db } from './../../config/firebase'
+import { useHistory } from 'react-router'
 
 const CampaignStyle = styled.div`
   font-size: 20px;
@@ -63,6 +64,11 @@ const AddProject = () => {
   const [recolteValue, setRecolteValue] = useState()
   const [durationValue, setDurationValue] = useState()
   const [avatar, setVatar] = useState()
+  const history = useHistory()
+  const user = JSON.parse(localStorage.getItem('user'))
+  if (!user) {
+    history.push('/')
+  }
   const handleChangeSelect = e => {
     console.log(e.target.value, ' Selected!!')
     setSelectValue(e.target.value)

@@ -42,6 +42,10 @@ const TitleH2 = styled.h2`
 
 const Campaign = () => {
   const history = useHistory()
+  const user = JSON.parse(localStorage.getItem('user'))
+  if (!user) {
+    history.push('/')
+  }
 
   const newProject = () => {
     history.push('/compagne/addProject')

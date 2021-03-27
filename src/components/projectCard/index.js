@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { db } from './../../config/firebase'
 
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import ButtonLike from '../buttonLike'
 
 const Card = styled.div`
@@ -40,7 +40,11 @@ const styleContainer = styled.div`
 
 const ProjectCard = () => {
   const [popular, setPopular] = useState([])
-
+  const user = JSON.parse(localStorage.getItem('user'))
+  const history = useHistory()
+  if (!user) {
+    history.push('/')
+  }
   useEffect(() => {
     //console.log(db)
     //use a firestore db to retrieve data for a post
