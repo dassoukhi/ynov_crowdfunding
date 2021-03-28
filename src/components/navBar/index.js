@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
 import logo from '../logo/favicon.png'
 
 import './index.css'
+import { getToken, onMessageListener } from '../../config/firebase'
 
 const NavbarStyle = styled.div`
   display: flex;
@@ -47,11 +48,27 @@ const stylediv = styled.div`
 const Navbar = () => {
   const history = useHistory()
   const user = JSON.parse(localStorage.getItem('user'))
+  const [isTokenFound, setTokenFound] = useState(false)
+  const [notification, setNotification] = useState({ title: '', body: '' })
   const handleLogout = () => {
     //delete all localStorage when I logout and push it into login page
     localStorage.clear()
     history.push('/')
   }
+  onMessageListener()
+    .then(payload => {
+      setNotification({
+        title: payload.notification.title,
+        body: payload.notification.body
+      })
+      console.log(payload)
+    })
+    .catch(err => console.log('failed: ', err))
+  useEffect(() => {
+    //console.log(db)
+    //use a firestore db to retrieve data for a post
+    getToken(setTokenFound)
+  }, [])
   const addProject = () => {
     history.push('/compagne')
   }
@@ -82,7 +99,10 @@ const Navbar = () => {
           {user ? (
             <Button onClick={handleLogout}>Se déconnecter</Button>
           ) : null} */}
-
+          {/* {isTokenFound && <h1> Notification permission enabled 👍🏻 </h1>}
+          {!isTokenFound && <h1> Need notification permission ❗️ </h1>}
+          <h3>{notification.title}</h3>
+          <p>{notification.body}</p>{' '} */}
           <nav>
             <ul>
               <li className='deroulant'>

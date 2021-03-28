@@ -5,10 +5,12 @@ import { db } from '../../config/firebase'
 const Detail = props => {
   const [test, setTest] = useState()
   const user = JSON.parse(localStorage.getItem('user'))
+
   const history = useHistory()
   if (!user) {
     history.push('/')
   }
+
   useEffect(() => {
     //console.log(db)
     //use a firestore db to retrieve data for a post
