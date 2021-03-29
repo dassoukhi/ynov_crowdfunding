@@ -8,7 +8,10 @@ import firebase from 'firebase'
 import { useHistory } from 'react-router'
 
 const CampaignStyle = styled.div`
-  font-size: 20px;
+  font-size: 16px;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
   & > div {
     display: flex;
     flex-direction: row;
@@ -16,18 +19,19 @@ const CampaignStyle = styled.div`
     margin-bottom: 25px;
     text-align: justify;
   }
-`
-const Card = styled.div`
-  :hover {
-    box-shadow: 1px 8px 10px grey;
-    -webkit-transition: box-shadow 0.1s ease-in;
+
+  @media screen and (min-width: 768px) {
+    font-size: 20px;
+    & > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-bottom: 25px;
+      text-align: justify;
+    }
   }
-  margin: auto;
-  min-width: 600px;
-  max-width: 2000px;
-  padding-right: 10%;
-  padding-left: 10%;
 `
+
 const StyleInput = styled.input`
   width: 100%;
   color: black;
@@ -54,6 +58,31 @@ const StyleImageUploadProgress = styled.progress`
   width: 100%;
 `
 
+const DivG = styled.div`
+  @media screen and (min-width: 768px) {
+    width: auto;
+    height: auto;
+    align-text: center;
+    :hover {
+      -webkit-transition: box-shadow 0.1s ease-in;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+  }
+`
+// const DivD = styled.div`
+//   @media screen and (min-width: 768px) {
+//     float: center;
+//     padding-right: 10%;
+//   }
+// `
+
+const DivCard = styled.div`
+  display: block;
+  width: auto;
+`
 const options = [
   {
     label: 'Home',
@@ -195,20 +224,20 @@ const AddProject = () => {
   return (
     <div>
       <Navbar />
-      <Card>
-        <CampaignStyle>
-          <div>
-            <div style={{ float: 'center', paddingRight: '10%' }}>
-              <TitleH1>
-                <strong>Préparez-vous à lancer votre campagne !</strong>
-              </TitleH1>
-              <p>
-                Nous voulons créer le meilleur onboarding pour vous - veuillez
-                remplir les informations ci-dessous. Vos réponses seront
-                bloquées pour cette campagne et ne pourront pas être modifiées
-                ultérieurement.
-              </p>
-            </div>
+      <CampaignStyle>
+        <DivCard>
+          <DivG>
+            <TitleH1>
+              <strong>Préparez-vous à lancer votre campagne !</strong>
+            </TitleH1>
+            <p>
+              Nous voulons créer le meilleur onboarding pour vous. Veuillez
+              remplir les informations ci-dessous. Vos réponses seront bloquées
+              pour cette campagne et ne pourront pas être modifiées
+              ultérieurement.
+            </p>
+            <br />
+            <br />
             <form onSubmit={handleSubmit}>
               <div>
                 <div>
@@ -338,9 +367,9 @@ const AddProject = () => {
                 <StyleInput type='submit' value='Save & Continue' />
               </div>
             </form>
-          </div>
-        </CampaignStyle>
-      </Card>
+          </DivG>
+        </DivCard>
+      </CampaignStyle>
       <Footer />
     </div>
   )

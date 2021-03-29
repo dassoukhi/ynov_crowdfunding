@@ -23,6 +23,9 @@ const FooterStyle = styled.div`
   margin: auto;
   //min-width: 600px;
   //max-width: 2000px;
+  /* @media screen and (max-width: 722px) {
+    display: none;
+  } */
 `
 const FooterStyleDiv = styled.div`
   display: flex;
@@ -36,6 +39,9 @@ const FooterList = styled.div`
   flex-direction: column;
   margin: 0px 50px;
   font-size: 17px;
+  @media screen and (max-width: 762px) {
+    font-size: 10px;
+  }
 `
 const FooterListDiv = styled.div`
   color: grey;
@@ -43,6 +49,9 @@ const FooterListDiv = styled.div`
 
 const FooterCard = styled.div`
   margin-left: 100px;
+  @media screen and (max-width: 762px) {
+    display: none;
+  }
 `
 
 const BottomIcon = styled.div`
@@ -136,7 +145,9 @@ const Footer = () => {
         <hr style={{ color: '#dddddd', width: '100%' }} />
         <div>
           <div>
-            <div>© 2021 YnovFunding. Tous droits réservés</div>
+            <div style={{ textAlign: 'center', color: 'black' }}>
+              © 2021 YnovFunding. Tous droits réservés
+            </div>
           </div>
         </div>
       </FooterStyle>

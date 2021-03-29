@@ -67,8 +67,8 @@ const Gived = () => {
           </StyleSpan>
           .
         </p>
-      </Card>
-      <Card2>
+        <br />
+        <br />
         <div>
           <div>
             <TitleH1>
@@ -99,7 +99,7 @@ const Gived = () => {
             </form>
           </div>
         </div>
-      </Card2>
+      </Card>
       <Footer />
     </div>
   )
@@ -114,41 +114,47 @@ const Buttons = styled.input`
   outline: none;
 `
 const Card = styled.div`
+  /* @media screen and (min-width: 768px) {
+    :hover {
+      //box-shadow: 1px 8px 10px grey;
+      -webkit-transition: box-shadow 0.1s ease-in;
+    }
+    margin: auto;
+    display: inline-block;
+    float: center;
+    width: 50%;
+    border-radius: 0.2rem;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 30px;
+    text-align: justify;
+  } */
   :hover {
     //box-shadow: 1px 8px 10px grey;
     -webkit-transition: box-shadow 0.1s ease-in;
   }
   margin: auto;
-  min-width: 600px;
-  max-width: 2000px;
-  min-height: 100%;
   display: inline-block;
-  float: left;
+  float: center;
   width: 50%;
   border-radius: 0.2rem;
   flex-direction: row;
   justify-content: space-between;
   padding: 30px;
   text-align: justify;
+
+  float: center;
+  width: 100%;
 `
-const Card2 = styled.div`
-  :hover {
-    //box-shadow: 1px 8px 10px grey;
-    -webkit-transition: box-shadow 0.1s ease-in;
-  }
-  margin: auto;
-  min-width: 600px;
-  max-width: 2000px;
-  width: 50%;
-  float: right;
-  padding-right: 10%;
-  padding-left: 10%;
-  padding-top: 2.5%;
-  //marginTop: 2%
-`
+
 const TitleH1 = styled.p`
-  text-align: justify;
-  font-size: 30px;
+  /* text-align: justify;
+  font-size: 20px; */
+  font-size: 20px;
+  @media screen and (min-width: 768px) {
+    text-align: justify;
+    font-size: 40px;
+  }
 `
 const StyleSpan = styled.span`
   color: red;

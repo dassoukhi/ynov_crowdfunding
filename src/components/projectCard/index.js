@@ -6,33 +6,50 @@ import red from './red.png'
 import { Link } from 'react-router-dom'
 
 const Card = styled.div`
+  width: 100%;
+  height: auto;
+  display: block;
   :hover {
     box-shadow: 1px 8px 10px grey;
     -webkit-transition: box-shadow 0.1s ease-in;
   }
   margin: auto;
-  min-width: 600px;
-  max-width: 2000px;
-
-  min-height: 100%;
-  display: inline-block;
   float: left;
-  width: 50%;
   border-radius: 0.2rem;
   flex-direction: row;
   justify-content: space-between;
   padding: 30px;
+
+  @media screen and (min-width: 768px) {
+    :hover {
+      box-shadow: 1px 8px 10px grey;
+      -webkit-transition: box-shadow 0.1s ease-in;
+    }
+    margin: auto;
+    min-height: 100%;
+    display: inline-block;
+    float: left;
+    width: 25%;
+    border-radius: 0.2rem;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 30px;
+  }
 `
-const styleTextLeftH2 = styled.div`
+const StyleTextLeftH2 = styled.div`
   //margin-left: 10%;
   //text-align: center;
 `
-const styleContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 20px 100px;
-`
+// const StyleContainer = styled.div`
+//   /display: flex;
+//   width: 100%;
+//   @media screen and (max-width: 768px) {
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-around;
+//     padding: 20px 100px;
+//   }
+// `
 const ButtonImg = styled.img`
   width: 30px;
   height: 30px;
@@ -125,14 +142,14 @@ const ProjectCard = () => {
   //console.log('Collection ->', db.collection('popular_projects'))
   return (
     <div>
-      <styleTextLeftH2>
+      <StyleTextLeftH2>
         <p style={{ textAlign: 'center', fontSize: '24px' }}>
           <strong>Les projets populaires</strong>
         </p>
-      </styleTextLeftH2>
-      <styleContainer>
+      </StyleTextLeftH2>
+      <div>
         {popular.map((item, index) => {
-          console.log(item.popular_projects)
+          //console.log(item.popular_projects)
           return (
             <Card key={index}>
               {/* Image du produit */}
@@ -224,8 +241,8 @@ const ProjectCard = () => {
             </Card>
           )
         })}
-      </styleContainer>
-      {/* <styleContainer>
+      </div>
+      {/* <StyleContainer>
         {popular.map((post => {
           console.log(post)
           return (
@@ -235,7 +252,7 @@ const ProjectCard = () => {
             </div>
           )
         })}
-      </styleContainer> */}
+      </StyleContainer> */}
     </div>
   )
 }

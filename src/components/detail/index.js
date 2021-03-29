@@ -7,7 +7,7 @@ import red from '../projectCard/red.png'
 import Footer from '../footer'
 
 const Card = styled.div`
-  margin: auto;
+  /* margin: auto;
   min-width: 600px;
   max-width: 2000px;
 
@@ -18,16 +18,25 @@ const Card = styled.div`
   border-radius: 0.2rem;
   flex-direction: row;
   justify-content: space-between;
-  padding: 30px;
-`
-const Card2 = styled.div`
-  margin: auto;
-  min-width: 600px;
-  max-width: 2000px;
+  padding: 30px; */
 
-  width: 50%;
-  float: right;
-  padding-right: 10%;
+  //////////////////////////////
+  //min-height: 100%;
+  border-radius: 0.2rem;
+  padding: 40px;
+  font-size: 20px;
+
+  /* @media screen and (min-width: 768px) {
+    margin: auto;
+    min-height: 100%;
+    display: inline-block;
+    float: left;
+    width: 50%;
+    border-radius: 0.2rem;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 30px;
+  } */
 `
 const StyleImageUploadProgress = styled.progress`
   width: 100%;
@@ -54,8 +63,19 @@ const StyleSpan = styled.span`
 `
 
 const StyleImg = styled.img`
-  height: 70%;
-  width: 70%;
+  height: 90%;
+  width: 90%;
+  text-align: center;
+  margin: auto;
+  display: flex;
+
+  @media screen and (min-width: 768px) {
+    height: 30%;
+    width: 30%;
+    text-align: center;
+    margin: auto;
+    display: flex;
+  }
 `
 
 const StyleTitle = styled.p`
@@ -194,8 +214,6 @@ const Detail = props => {
               alt={test.name}
               // style={{ height: '70%', width: '70%' }}
             />
-          </Card>
-          <Card2>
             {/* Détails du produit */}
             <divDetail>
               <div>
@@ -223,7 +241,9 @@ const Detail = props => {
               {/* Print la description */}
               <StyleDesc>{test.description}</StyleDesc>
               {/* Print le prix */}
-              <p>{test.price} €</p>
+              <p>
+                {test.price}€ / {test.recolte}€
+              </p>
               {/* Print le pourcentage */}
               <div
                 style={{
@@ -265,7 +285,7 @@ const Detail = props => {
                         value={donation}
                         onChange={handleChangeDonation}
                         style={{
-                          width: '95%',
+                          width: '90%',
                           color: 'black',
                           textAlign: 'center'
                         }}
@@ -281,7 +301,7 @@ const Detail = props => {
                 </form>
               </div>
             </divDetail>
-          </Card2>
+          </Card>
         </div>
       ) : (
         ''
@@ -292,7 +312,7 @@ const Detail = props => {
 }
 const Buttons = styled.input`
   background: #008cba;
-  width: 95%;
+  width: 90%;
   float: left;
   //border: 0;
   border: 1px solid #008cba;
