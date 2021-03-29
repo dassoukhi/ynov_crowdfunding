@@ -5,8 +5,9 @@ import Footer from '../../components/footer'
 import { db } from './../../config/firebase'
 import { useHistory } from 'react-router'
 import StripeCheckout from 'react-stripe-checkout'
-import { toast } from 'react-toastify'
-import { ContactsTwoTone } from '@ant-design/icons'
+import ReactNotification from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
+import { store } from 'react-notifications-component'
 const Gived = () => {
   const [donation, setDonation] = useState(5)
   const [fond, setfond] = useState()
@@ -45,13 +46,38 @@ const Gived = () => {
     console.log({ token, adress })
     if (token) {
       handleSubmit()
-      toast('Paiement effectué avec succés', { type: 'success' })
+      store.addNotification({
+        title: 'Paiement effectué avec succés!',
+        message: 'Merci de votre générosité.',
+        type: 'success',
+        insert: 'top',
+        container: 'top-right',
+        animationIn: ['animate__animated', 'animate__fadeIn'],
+        animationOut: ['animate__animated', 'animate__fadeOut'],
+        dismiss: {
+          duration: 5000,
+          onScreen: true
+        }
+      })
     } else {
-      toast('Paiement non effectué', { type: 'error' })
+      store.addNotification({
+        title: 'Paiement non effectué',
+        message: 'Une erreur est produit',
+        type: 'error',
+        insert: 'top',
+        container: 'top-right',
+        animationIn: ['animate__animated', 'animate__fadeIn'],
+        animationOut: ['animate__animated', 'animate__fadeOut'],
+        dismiss: {
+          duration: 5000,
+          onScreen: true
+        }
+      })
     }
   }
   return (
     <div>
+      <ReactNotification />
       <Navbar />
       <div className='start-camp-section' align='center'>
         <label>Combien d'argent aimeriez-vous donner?</label>
