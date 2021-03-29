@@ -2,11 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import LoginFrom from '../components/loginFrom'
 
 const Login = () => {
   const history = useHistory()
+  toast.success('test')
 
   if (localStorage.getItem('token')) {
     history.push('/home')

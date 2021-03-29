@@ -4,9 +4,12 @@ import Navbar from '../../components/navBar'
 import Footer from '../../components/footer'
 import { db } from './../../config/firebase'
 import { useHistory } from 'react-router'
+import StripeCheckout from 'react-stripe-checkout'
+import { toast } from 'react-toastify'
+import { ContactsTwoTone } from '@ant-design/icons'
 const Gived = () => {
-  const [donation, setDonation] = useState(0)
-  const [fond, setfond] = useState(0)
+  const [donation, setDonation] = useState(5)
+  const [fond, setfond] = useState()
   const history = useHistory()
   const user = JSON.parse(localStorage.getItem('user'))
   if (!user) {
@@ -16,55 +19,64 @@ const Gived = () => {
   const handleChangeDonation = e => {
     setDonation(e.target.value)
   }
-  const handleSubmit = e => {
-    e.preventDefault()
+
+  const handleSubmit = () => {
     db.collection('donation')
       .doc('fonds')
       .onSnapshot(snapshot => {
         setfond(snapshot.data().montant)
       })
-    setTimeout(() => {
-      console.log('This will run after 1 second!')
-      if (donation && fond) {
-        db.collection('donation')
-          .doc('fonds')
-          .update('montant', Number(fond) + Number(donation))
-          .then(function () {
-            console.log('Montant successfully added!')
-          })
-          .catch(function (error) {
-            console.error('Error writing document: ', error)
-          })
-      } else {
-        alert('Vous devez remplir la case de donation')
-      }
-    }, 2000)
+    console.log('This will run after 1 second!')
+    if (donation && fond) {
+      db.collection('donation')
+        .doc('fonds')
+        .update('montant', Number(fond) + Number(donation))
+        .then(function () {
+          console.log('Montant successfully added!')
+        })
+        .catch(function (error) {
+          console.error('Error writing document: ', error)
+        })
+    } else {
+      alert('Vous devez remplir la case de donation')
+    }
+  }
+  const handleToken = (token, adress) => {
+    console.log({ token, adress })
+    if (token) {
+      handleSubmit()
+      toast('Paiement effectué avec succés', { type: 'success' })
+    } else {
+      toast('Paiement non effectué', { type: 'error' })
+    }
   }
   return (
     <div>
       <Navbar />
-      <form className='start-camp-form' onSubmit={handleSubmit}>
-        <div className='start-camp-section' align='center'>
-          <label>Combien d'argent aimeriez-vous donner?</label>
-          <div className='goal-input'>
-            <input
-              className='amount-input'
-              type='number'
-              step='any'
-              min='1.00'
-              placeholder={null}
-              value={donation}
-              onChange={handleChangeDonation}
-              required
-            />
-            <span className='eur'>EUR</span>
-          </div>
+      <div className='start-camp-section' align='center'>
+        <label>Combien d'argent aimeriez-vous donner?</label>
+        <div className='goal-input'>
+          <input
+            className='amount-input'
+            type='number'
+            step='any'
+            min='1.00'
+            placeholder={null}
+            value={donation}
+            onChange={handleChangeDonation}
+            required
+          />
+          <span className='eur'>EUR</span>
         </div>
+      </div>
 
-        <div align='center'>
-          <input type='submit' value='Donner'></input>
-        </div>
-      </form>
+      <div align='center'>
+        <StripeCheckout
+          stripeKey='pk_test_51Ia9vMBob8pzUf4Ur0hAdyqds42T7ftb5URwhVi7anAevgpj7X1cqEA2LTtWHahTpPLT5yA0vGSqDAct3l3hwFFI00DKCVo64L'
+          token={handleToken}
+        />
+      </div>
+
       <Footer />
     </div>
   )
