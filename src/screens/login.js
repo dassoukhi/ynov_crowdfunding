@@ -1,6 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
-
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 

@@ -1,18 +1,25 @@
-import React, { useState } from 'react'
+/* eslint-disable react/no-unescaped-entities */
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Navbar from '../../components/navBar'
 import Footer from '../../components/footer'
 import { db } from './../../config/firebase'
 import { useHistory } from 'react-router'
-import StripeCheckout from 'react-stripe-checkout'
 import ReactNotification from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
-import { store } from 'react-notifications-component'
+import Payment from '../payment'
 const Gived = () => {
   const [donation, setDonation] = useState(5)
   const [fond, setfond] = useState()
   const history = useHistory()
   const user = JSON.parse(localStorage.getItem('user'))
+  useEffect(() => {
+    db.collection('donation')
+      .doc('fonds')
+      .onSnapshot(snapshot => {
+        setfond(snapshot.data().montant)
+      })
+  }, [])
   if (!user) {
     history.push('/')
   }
@@ -22,11 +29,11 @@ const Gived = () => {
   }
 
   const handleSubmit = () => {
-    db.collection('donation')
-      .doc('fonds')
-      .onSnapshot(snapshot => {
-        setfond(snapshot.data().montant)
-      })
+    // db.collection('donation')
+    //   .doc('fonds')
+    //   .onSnapshot(snapshot => {
+    //     setfond(snapshot.data().montant)
+    //   })
     console.log('This will run after 1 second!')
     if (donation && fond) {
       db.collection('donation')
@@ -38,74 +45,120 @@ const Gived = () => {
         .catch(function (error) {
           console.error('Error writing document: ', error)
         })
-    } else {
-      alert('Vous devez remplir la case de donation')
     }
   }
-  const handleToken = (token, adress) => {
-    console.log({ token, adress })
-    if (token) {
-      handleSubmit()
-      store.addNotification({
-        title: 'Paiement effectué avec succés!',
-        message: 'Merci de votre générosité.',
-        type: 'success',
-        insert: 'top',
-        container: 'top-right',
-        animationIn: ['animate__animated', 'animate__fadeIn'],
-        animationOut: ['animate__animated', 'animate__fadeOut'],
-        dismiss: {
-          duration: 5000,
-          onScreen: true
-        }
-      })
-    } else {
-      store.addNotification({
-        title: 'Paiement non effectué',
-        message: 'Une erreur est produit',
-        type: 'error',
-        insert: 'top',
-        container: 'top-right',
-        animationIn: ['animate__animated', 'animate__fadeIn'],
-        animationOut: ['animate__animated', 'animate__fadeOut'],
-        dismiss: {
-          duration: 5000,
-          onScreen: true
-        }
-      })
-    }
-  }
+
   return (
     <div>
       <ReactNotification />
       <Navbar />
-      <div className='start-camp-section' align='center'>
-        <label>Combien d'argent aimeriez-vous donner?</label>
-        <div className='goal-input'>
-          <input
-            className='amount-input'
-            type='number'
-            step='any'
-            min='1.00'
-            placeholder={null}
-            value={donation}
-            onChange={handleChangeDonation}
-            required
-          />
-          <span className='eur'>EUR</span>
-        </div>
-      </div>
+      <Card>
+        <TitleH1>
+          <strong>
+            Collecte de fonds pour les personnes et les causes qui nous tiennent
+            à coeur
+          </strong>
+        </TitleH1>
+        <p>
+          Nous voulons aider tous les entrepreneurs à réaliser tous les projets
+          qui leur tiennent à coeur. La somme que vous verserez sera versé
+          auprès des projets qui n'ont pas pu arriver à terme à cause d'un
+          manque de financement.
+          <br />
+          <br />
+          Aujourd'hui, nous en sommes à{' '}
+          <StyleSpan>
+            <strong>{fond} €</strong>
+          </StyleSpan>
+          .
+        </p>
+        <br />
+        <br />
+        <div>
+          <div>
+            <TitleH1>
+              <strong>Faire un don ?</strong>
+            </TitleH1>
 
-      <div align='center'>
-        <StripeCheckout
-          stripeKey='pk_test_51Ia9vMBob8pzUf4Ur0hAdyqds42T7ftb5URwhVi7anAevgpj7X1cqEA2LTtWHahTpPLT5yA0vGSqDAct3l3hwFFI00DKCVo64L'
-          token={handleToken}
-        />
-      </div>
+            <div>
+              <label>
+                Montant que vous souhaitez donner? <StyleSpan> *</StyleSpan>
+              </label>
+              <div>
+                <StyleInput
+                  type='number'
+                  step='any'
+                  min='1.00'
+                  placeholder='Montant que vous souhaitez donner?'
+                  value={donation}
+                  onChange={handleChangeDonation}
+                  required
+                />
+                <span>€</span>
+              </div>
+            </div>
+            <Payment handleSubmit={handleSubmit} />
+          </div>
+        </div>
+      </Card>
 
       <Footer />
     </div>
   )
 }
 
+const Card = styled.div`
+  /* @media screen and (min-width: 768px) {
+    :hover {
+      //box-shadow: 1px 8px 10px grey;
+      -webkit-transition: box-shadow 0.1s ease-in;
+    }
+    margin: auto;
+    display: inline-block;
+    float: center;
+    width: 50%;
+    border-radius: 0.2rem;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 30px;
+    text-align: justify;
+  } */
+  :hover {
+    //box-shadow: 1px 8px 10px grey;
+    -webkit-transition: box-shadow 0.1s ease-in;
+  }
+  margin: auto;
+  display: inline-block;
+  float: center;
+  width: 50%;
+  border-radius: 0.2rem;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 30px;
+  text-align: justify;
+
+  float: center;
+  width: 100%;
+`
+
+const TitleH1 = styled.p`
+  /* text-align: justify;
+  font-size: 20px; */
+  font-size: 20px;
+  @media screen and (min-width: 768px) {
+    text-align: justify;
+    font-size: 40px;
+  }
+`
+const StyleSpan = styled.span`
+  color: red;
+  float: center;
+`
+const StyleInput = styled.input`
+  width: 95%;
+  color: black;
+  border: 1px solid black;
+  float: left;
+  text-align: center;
+`
 export default Gived

@@ -42,9 +42,3 @@ const onMessageListener = () =>
   })
 
 export { db, auth, storage, getToken, onMessageListener }
-
-// msg.requestPermission().then(()=>{
-//       return msg.getToken();
-//     }).then((data)=>{
-//       console.warn("token",data)
-//     })

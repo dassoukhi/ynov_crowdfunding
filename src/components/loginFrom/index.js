@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
@@ -28,66 +29,28 @@ const LoginFrom = () => {
         // ...
       })
       .catch(error => {
-        var errorCode = error.code
         var errorMessage = error.message
         console.log('error: ', errorMessage)
       })
     // [END auth_signin_password]
   }
 
-  function sendEmailVerification() {
-    // [START auth_send_email_verification]
-    auth.currentUser.sendEmailVerification().then(() => {
-      // Email verification sent!
-      // ...
-    })
-    // [END auth_send_email_verification]
-  }
-
-  function sendPasswordReset() {
-    const email = 'sam@example.com'
-    // [START auth_send_password_reset]
-    auth
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        // Password reset email sent!
-        // ..
-      })
-      .catch(error => {
-        var errorCode = error.code
-        var errorMessage = error.message
-        // ..
-      })
-    // [END auth_send_password_reset]
-  }
-  function signOut() {
-    // [START auth_sign_out]
-    auth
-      .signOut()
-      .then(() => {
-        // Sign-out successful.
-      })
-      .catch(error => {
-        // An error happened.
-      })
-    // [END auth_sign_out]
-  }
-
-  function authStateListener() {
-    // [START auth_state_listener]
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        var uid = user.uid
-        // ...
-      } else {
-        // User is signed out
-        // ...
-      }
-    })
-    // [END auth_state_listener]
-  }
+  // function sendPasswordReset() {
+  //   const email = 'sam@example.com'
+  //   // [START auth_send_password_reset]
+  //   auth
+  //     .sendPasswordResetEmail(email)
+  //     .then(() => {
+  //       // Password reset email sent!
+  //       // ..
+  //     })
+  //     .catch(error => {
+  //       var errorCode = error.code
+  //       var errorMessage = error.message
+  //       // ..
+  //     })
+  //   // [END auth_send_password_reset]
+  // }
 
   const sendForm = e => {
     e.preventDefault()

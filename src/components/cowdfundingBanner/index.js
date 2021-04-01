@@ -9,23 +9,35 @@ const BannerStyle = styled.div`
   flex-direction: row;
   //margin: 20px 13%;
   width: 100%;
+  //height: 50%;
+
+  @media screen and (max-width: 762px) {
+    display: none;
+  }
 `
 const Stylediv = styled.div`
   //margin: 30px 50px;
-  margin: auto;
-  height: 30%;
+  //margin: auto;
+  //height: 30%;
+  display: block;
+  float: left;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10%;
 `
 const StyleP1 = styled.p`
   font-size: 18px;
-  margin: 30px;
+  text-align: center;
+  //margin: 30px;
 `
 const StyleP2 = styled.p`
   font-size: 12px;
-  margin: 20px 30px;
+  //margin: 20px 30px;
   text-align: justify;
 `
 const StyleP3 = styled.p`
-  font-size: 18px;
+  font-size: 20px;
+  text-align: center;
 `
 const CrowdfundingBanner = () => {
   return (

@@ -1,18 +1,87 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Navbar from '../../components/navBar'
 import Footer from '../../components/footer'
-import { db } from './../../config/firebase'
+import { storage, db } from './../../config/firebase'
+import firebase from 'firebase'
 import { useHistory } from 'react-router'
 
 const CampaignStyle = styled.div`
-  font-size: 20px;
+  font-size: 16px;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
   & > div {
     display: flex;
     flex-direction: row;
     justify-content: center;
     margin-bottom: 25px;
+    text-align: justify;
   }
+
+  @media screen and (min-width: 768px) {
+    font-size: 20px;
+    & > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-bottom: 25px;
+      text-align: justify;
+    }
+  }
+`
+
+const StyleInput = styled.input`
+  width: 100%;
+  color: black;
+  border: 1px solid black;
+`
+const StyleInputTA = styled.textarea`
+  width: 100%;
+  height: 300px;
+  color: black;
+`
+const TitleH1 = styled.p`
+  text-align: center;
+  font-size: 30px;
+`
+const StyleSpan = styled.span`
+  color: red;
+`
+const StyleSelect = styled.select`
+  width: 100%;
+  text-align: justify;
+  color: black;
+`
+const StyleImageUploadProgress = styled.progress`
+  width: 100%;
+`
+
+const DivG = styled.div`
+  @media screen and (min-width: 768px) {
+    width: auto;
+    height: auto;
+    align-text: center;
+    :hover {
+      -webkit-transition: box-shadow 0.1s ease-in;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+  }
+`
+// const DivD = styled.div`
+//   @media screen and (min-width: 768px) {
+//     float: center;
+//     padding-right: 10%;
+//   }
+// `
+
+const DivCard = styled.div`
+  display: block;
+  width: auto;
 `
 const options = [
   {
@@ -63,12 +132,10 @@ const AddProject = () => {
   const [descriptValue, setDescriptValue] = useState('')
   const [recolteValue, setRecolteValue] = useState()
   const [durationValue, setDurationValue] = useState()
-  const [avatar, setVatar] = useState()
+  const [avatar, setAvatar] = useState(null)
+  const [progress, setProgress] = useState(0)
   const history = useHistory()
-  const user = JSON.parse(localStorage.getItem('user'))
-  if (!user) {
-    history.push('/')
-  }
+
   const handleChangeSelect = e => {
     console.log(e.target.value, ' Selected!!')
     setSelectValue(e.target.value)
@@ -91,184 +158,221 @@ const AddProject = () => {
   }
 
   const handleChangeAvatar = e => {
-    console.log(e.target.value, ' => Avatar!!')
-    setVatar(e.target.value)
+    if (e.target.files[0]) {
+      setAvatar(e.target.files[0])
+    }
   }
+
   const handleSubmit = e => {
     e.preventDefault()
-    if (titleValue && durationValue && descriptValue && recolteValue) {
-      var currentdate = new Date()
-      var datetime =
-        'Last Sync: ' +
-        currentdate.getDate() +
-        '/' +
-        (currentdate.getMonth() + 1) +
-        '/' +
-        currentdate.getFullYear() +
-        ' ' +
-        currentdate.getHours() +
-        ':' +
-        currentdate.getMinutes() +
-        ':' +
-        currentdate.getSeconds()
-      console.log(datetime)
-      db.collection('popular_projects')
-        .doc()
-        .set({
-          name: titleValue,
-          description: descriptValue,
-          recolte: recolteValue,
-          deadline: durationValue,
-          category: selectValue,
-          currency: 'EUR raised',
-          type: 'FUNDING',
-          timestamp: datetime,
-          price: '€0',
-          likes: [],
-          avatar: avatar
-            ? avatar
-            : 'https://www.zupimages.net/up/21/12/dzvs.jpg'
-        })
-        .then(function () {
-          console.log('Document successfully written!')
-        })
-        .catch(function (error) {
-          console.error('Error writing document: ', error)
-        })
-    } else {
-      alert('Veullez remplir tout les cases svp!!')
+    const uploadTask = storage.ref(`images/${avatar.name}`).put(avatar)
+    if (
+      titleValue &&
+      durationValue &&
+      descriptValue &&
+      recolteValue &&
+      avatar
+    ) {
+      uploadTask.on(
+        'state_changed',
+        snapshot => {
+          //progress bar ...
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          )
+          setProgress(progress)
+        },
+        error => {
+          //error...
+          console.log(error)
+          alert(error.message)
+        },
+        () => {
+          //when the progress bar is at 100 % then store data into firestore db
+          storage
+            .ref('images')
+            .child(avatar.name)
+            .getDownloadURL()
+            .then(url => {
+              //post image into db into posts collection
+              db.collection('popular_projects').add({
+                name: titleValue,
+                description: descriptValue,
+                recolte: recolteValue,
+                deadline: durationValue,
+                category: selectValue,
+                currency: 'EUR raised',
+                type: 'FUNDING',
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                price: '0',
+                percentage: 0,
+                avatar: url,
+                likes: []
+              })
+              setSelectValue('')
+              setTitleValue('')
+              setDescriptValue('')
+              setRecolteValue()
+              setDurationValue()
+              setAvatar(null)
+              setProgress(0)
+            })
+        }
+      )
     }
+    history.push('/home')
   }
   return (
     <div>
       <Navbar />
       <CampaignStyle>
-        <div className='basics-scope'>
-          {null}
-          <form onSubmit={handleSubmit} className='basics-form camp-form'>
-            <div className='entre-section'>
-              <div className='entre-header'>Basics</div>
-              <div className='entre-subheader'>
-                Faites une bonne première impression: présentez les objectifs de
-                votre campagne et incitez les gens à en savoir plus. Ces
-                informations de base représenteront votre campagne sur votre
-                page de campagne, sur votre carte de campagne et dans les
-                recherches.
-              </div>
-              <div className='entre-field'>
-                <label>
-                  Titre de Campaigne<span> *</span>
-                </label>
-                <div className='field-sublabel'>
-                  Quel est le titre de votre campagne?
-                </div>
-                <input
-                  className='text-field'
-                  value={titleValue}
-                  name='titre'
-                  maxLength='50'
-                  onChange={handleChangeTitle}
-                />
-              </div>
-              <div className='entre-field'>
-                <label>
-                  Campaign Tagline<span> *</span>
-                </label>
-                <div className='field-sublabel'>
-                  Fournissez une brève description qui décrit le mieux votre
-                  campagne à votre public.
-                </div>
-                <textarea
-                  className='text-field text-area-en basics-txt'
-                  value={descriptValue}
-                  name='description'
-                  onChange={handleChangeDescrip}
-                />
-              </div>
-              <div className='start-camp-section'>
-                <label>Combien d'argent aimeriez-vous collecter?</label>
-                <div className='goal-input'>
-                  <span className='dollar-sign'>€</span>
-                  <input
-                    className='amount-input'
-                    type='number'
-                    pattern='^\d+([,.][0-9]{1,2})?$'
-                    min='500.00'
-                    value={recolteValue}
-                    placeholder={recolteValue}
-                    onChange={handleChangeRecolte}
-                  />
-                  <span className='usd'>EUR</span>
-                </div>
-                <div className='camp-start-undertext'>500€ Minimum.</div>
-              </div>
-              <div className='entre-field'>
-                <label>
-                  Campaign Card Image<span> *</span>
-                </label>
-                <div className='field-sublabel'>
-                  Importez une image qui représente votre campagne.
+        <DivCard>
+          <DivG>
+            <TitleH1>
+              <strong>Préparez-vous à lancer votre campagne !</strong>
+            </TitleH1>
+            <p>
+              Nous voulons créer le meilleur onboarding pour vous. Veuillez
+              remplir les informations ci-dessous. Vos réponses seront bloquées
+              pour cette campagne et ne pourront pas être modifiées
+              ultérieurement.
+            </p>
+            <br />
+            <br />
+            <form onSubmit={handleSubmit}>
+              <div>
+                <div>
+                  <strong>Faites une bonne première impression:</strong>
                   <br />
-                  Résolution recommandée de 640 x 640, résolution minimale de
-                  220 x 220
+                  Présentez les objectifs de votre campagne et incitez les gens
+                  à en savoir plus. Ces informations de base représenteront
+                  votre campagne sur votre page de campagne, sur votre carte de
+                  campagne.
                 </div>
-                <div className='upload-image-wrapper'>
-                  <div className='entre-image'>
-                    <input
-                      type='file'
-                      className='enter-image-file'
-                      value={avatar}
-                      onChange={handleChangeAvatar}
+                <br />
+                <div>
+                  <label>
+                    Titre de la campagne<StyleSpan> *</StyleSpan>
+                  </label>
+                  <br />
+                  <StyleInput
+                    value={titleValue}
+                    name='titre'
+                    maxLength='50'
+                    onChange={handleChangeTitle}
+                    required
+                  />
+                </div>
+                <br />
+                <div>
+                  <label>
+                    Description de la campagne<StyleSpan> *</StyleSpan>
+                  </label>
+                  <div>
+                    Fournissez une brève description qui décrit le mieux votre
+                    campagne à votre public.
+                  </div>
+                  <StyleInputTA
+                    value={descriptValue}
+                    name='description'
+                    onChange={handleChangeDescrip}
+                    required
+                  />
+                </div>
+                <br />
+                <div>
+                  <label>
+                    Combien d'argent aimeriez-vous collecter ? (devise: EUR)
+                    <StyleSpan> *</StyleSpan>
+                  </label>
+                  <div>
+                    <StyleInput
+                      type='number'
+                      pattern='^\d+([,.][0-9]{1,2})?$'
+                      min='500.00'
+                      value={recolteValue}
+                      placeholder={recolteValue}
+                      onChange={handleChangeRecolte}
+                      required
                     />
                   </div>
-                  <img className='camera-img' src={null} />
+                  <div>500€ Minimum.</div>
+                </div>
+                <br />
+                <div>
+                  <label>
+                    Image de la campagne<StyleSpan> *</StyleSpan>
+                  </label>
+                  <div>
+                    Importez une image qui représente votre campagne.
+                    <br />
+                    Résolution recommandée de 640 x 640, résolution minimale de
+                    220 x 220
+                  </div>
+                  <div>
+                    <div>
+                      {/* <StyleInput
+                          type='file'
+                          value={avatar}
+                          onChange={handleChangeAvatar}
+                        /> */}
+                      <input
+                        type='file'
+                        onChange={handleChangeAvatar}
+                        accept='image/*'
+                        required
+                      />
+                    </div>
+                    <img src={avatar} />
+                  </div>
+                </div>
+                <br />
+                <div>
+                  <label>
+                    Categorie<StyleSpan> *</StyleSpan>
+                  </label>
+                  <div>
+                    Pour aider les contributeurs à trouver votre campagne,
+                    sélectionnez une catégorie qui représente le mieux votre
+                    projet.
+                  </div>
+                  <StyleSelect
+                    value={selectValue}
+                    placeholder='Select a category'
+                    onChange={handleChangeSelect}
+                    required
+                  >
+                    {options.map((option, index) => (
+                      // eslint-disable-next-line react/jsx-key
+                      <option key={index} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </StyleSelect>
+                </div>
+                <br />
+                <div>
+                  <label>
+                    Durée de la campagne<StyleSpan> *</StyleSpan>
+                  </label>
+                  <div>
+                    Pendant combien de temps allez-vous diffuser votre campagne?
+                  </div>
+                  <StyleInput
+                    type='datetime-local'
+                    value={durationValue}
+                    onChange={handleChangeDuration}
+                    required
+                  />
                 </div>
               </div>
-              <div className='entre-field'>
-                <label>
-                  Categorie<span> *</span>
-                </label>
-                <div className='field-sublabel'>
-                  Pour aider les contributeurs à trouver votre campagne,
-                  sélectionnez une catégorie qui représente le mieux votre
-                  projet.
-                </div>
-                <select
-                  value={selectValue}
-                  className='select-cat'
-                  placeholder='Select a category'
-                  onChange={handleChangeSelect}
-                >
-                  {options.map(option => (
-                    // eslint-disable-next-line react/jsx-key
-                    <option value={option.value}>{option.label}</option>
-                  ))}
-                </select>
+              <StyleImageUploadProgress value={progress} max='100' />
+              <div>
+                <StyleInput type='submit' value='Save & Continue' />
               </div>
-              <div className='entre-field'>
-                <label>
-                  Durée de la campagne<span> *</span>
-                </label>
-                <div className='field-sublabel'>
-                  Pendant combien de temps allez-vous diffuser votre campagne?
-                </div>
-                <input
-                  type='datetime-local'
-                  className='entre-duration'
-                  value={durationValue}
-                  onChange={handleChangeDuration}
-                />
-              </div>
-            </div>
-            <div className='save-n-cont'>
-              <input
-                type='submit'
-                className='btn-purple launch-btn'
-                value='Save & Continue'
-              />
-            </div>
-          </form>
-        </div>
+            </form>
+          </DivG>
+        </DivCard>
       </CampaignStyle>
       <Footer />
     </div>
