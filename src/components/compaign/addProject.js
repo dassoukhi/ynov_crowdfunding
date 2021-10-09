@@ -1,132 +1,25 @@
-/* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import Navbar from '../../components/navBar'
 import Footer from '../../components/footer'
 import { storage, db } from './../../config/firebase'
 import firebase from 'firebase'
 import { useHistory } from 'react-router'
-
-const CampaignStyle = styled.div`
-  font-size: 16px;
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
-  & > div {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-bottom: 25px;
-    text-align: justify;
-  }
-
-  @media screen and (min-width: 768px) {
-    font-size: 20px;
-    & > div {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      margin-bottom: 25px;
-      text-align: justify;
-    }
-  }
-`
-
-const StyleInput = styled.input`
-  width: 100%;
-  color: black;
-  border: 1px solid black;
-`
-const StyleInputTA = styled.textarea`
-  width: 100%;
-  height: 300px;
-  color: black;
-`
-const TitleH1 = styled.p`
-  text-align: center;
-  font-size: 30px;
-`
-const StyleSpan = styled.span`
-  color: red;
-`
-const StyleSelect = styled.select`
-  width: 100%;
-  text-align: justify;
-  color: black;
-`
-const StyleImageUploadProgress = styled.progress`
-  width: 100%;
-`
-
-const DivG = styled.div`
-  @media screen and (min-width: 768px) {
-    width: auto;
-    height: auto;
-    align-text: center;
-    :hover {
-      -webkit-transition: box-shadow 0.1s ease-in;
-    }
-  }
-  @media screen and (max-width: 768px) {
-    width: 100%;
-    height: 100%;
-  }
-`
-// const DivD = styled.div`
-//   @media screen and (min-width: 768px) {
-//     float: center;
-//     padding-right: 10%;
-//   }
-// `
-
-const DivCard = styled.div`
-  display: block;
-  width: auto;
-`
-const options = [
-  {
-    label: 'Home',
-    value: 'Home'
-  },
-  {
-    label: 'Phones & Accessories',
-    value: 'Phones & Accessories'
-  },
-  {
-    label: 'Travel & Outdoors',
-    value: 'Travel & Outdoors'
-  },
-  {
-    label: 'Film',
-    value: 'Film'
-  },
-  {
-    label: 'Community Projects',
-    value: 'Community Projects'
-  },
-  {
-    label: 'Health & Fitness',
-    value: 'Health & Fitness'
-  },
-  {
-    label: 'Fashion & Wearables',
-    value: 'Fashion & Wearables'
-  },
-  {
-    label: 'Tabletop Games',
-    value: 'Tabletop Games'
-  },
-  {
-    label: 'Music',
-    value: 'Music'
-  },
-  {
-    label: 'Equity',
-    value: 'Equity'
-  }
-]
+import { useTranslation } from 'react-i18next'
+import {
+  CampaignStyle,
+  StyleInput,
+  StyleInputTA,
+  TitleH1,
+  StyleSpan,
+  StyleSelect,
+  StyleImageUploadProgress,
+  DivG,
+  DivCard,
+  options
+} from './addProjectStyle'
 
 const AddProject = () => {
+  const { t } = useTranslation()
   const [selectValue, setSelectValue] = useState('Home')
   const [titleValue, setTitleValue] = useState('')
   const [descriptValue, setDescriptValue] = useState('')
@@ -137,23 +30,18 @@ const AddProject = () => {
   const history = useHistory()
 
   const handleChangeSelect = e => {
-    console.log(e.target.value, ' Selected!!')
     setSelectValue(e.target.value)
   }
   const handleChangeTitle = e => {
-    console.log(e.target.value, ' => Titre!!')
     setTitleValue(e.target.value)
   }
   const handleChangeRecolte = e => {
-    console.log(e.target.value, ' => prix!!')
     setRecolteValue(e.target.value)
   }
   const handleChangeDescrip = e => {
-    console.log(e.target.value, ' => Descrition!!')
     setDescriptValue(e.target.value)
   }
   const handleChangeDuration = e => {
-    console.log(e.target.value, ' => Durée!!')
     setDurationValue(e.target.value)
   }
 
@@ -206,7 +94,8 @@ const AddProject = () => {
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 price: '0',
                 percentage: 0,
-                avatar: url
+                avatar: url,
+                likes: []
               })
               setSelectValue('')
               setTitleValue('')
@@ -228,30 +117,23 @@ const AddProject = () => {
         <DivCard>
           <DivG>
             <TitleH1>
-              <strong>Préparez-vous à lancer votre campagne !</strong>
+              <strong>{t('addData.title')}</strong>
             </TitleH1>
-            <p>
-              Nous voulons créer le meilleur onboarding pour vous. Veuillez
-              remplir les informations ci-dessous. Vos réponses seront bloquées
-              pour cette campagne et ne pourront pas être modifiées
-              ultérieurement.
-            </p>
+            <p>{t('addData.desc')}</p>
             <br />
             <br />
             <form onSubmit={handleSubmit}>
               <div>
                 <div>
-                  <strong>Faites une bonne première impression:</strong>
+                  <strong>{t('addData.ajProj.title')}</strong>
                   <br />
-                  Présentez les objectifs de votre campagne et incitez les gens
-                  à en savoir plus. Ces informations de base représenteront
-                  votre campagne sur votre page de campagne, sur votre carte de
-                  campagne.
+                  {t('addData.ajProj.desc')}
                 </div>
                 <br />
                 <div>
                   <label>
-                    Titre de la campagne<StyleSpan> *</StyleSpan>
+                    {t('addData.ajProj.label1')}
+                    <StyleSpan> *</StyleSpan>
                   </label>
                   <br />
                   <StyleInput
@@ -265,12 +147,10 @@ const AddProject = () => {
                 <br />
                 <div>
                   <label>
-                    Description de la campagne<StyleSpan> *</StyleSpan>
+                    {t('addData.ajProj.label2')}
+                    <StyleSpan> *</StyleSpan>
                   </label>
-                  <div>
-                    Fournissez une brève description qui décrit le mieux votre
-                    campagne à votre public.
-                  </div>
+                  <div>{t('addData.ajProj.label2Desc')}</div>
                   <StyleInputTA
                     value={descriptValue}
                     name='description'
@@ -281,7 +161,7 @@ const AddProject = () => {
                 <br />
                 <div>
                   <label>
-                    Combien d'argent aimeriez-vous collecter ? (devise: EUR)
+                    {t('addData.ajProj.label3')}
                     <StyleSpan> *</StyleSpan>
                   </label>
                   <div>
@@ -295,29 +175,25 @@ const AddProject = () => {
                       required
                     />
                   </div>
-                  <div>500€ Minimum.</div>
+                  <div>{t('addData.ajProj.label3Desc')}</div>
                 </div>
                 <br />
                 <div>
                   <label>
-                    Image de la campagne<StyleSpan> *</StyleSpan>
+                    {t('addData.ajProj.label4')}
+                    <StyleSpan> *</StyleSpan>
                   </label>
                   <div>
-                    Importez une image qui représente votre campagne.
+                    {t('addData.ajProj.label4Desc1')}
                     <br />
-                    Résolution recommandée de 640 x 640, résolution minimale de
-                    220 x 220
+                    {t('addData.ajProj.label4Desc2')}
                   </div>
                   <div>
                     <div>
-                      {/* <StyleInput
-                          type='file'
-                          value={avatar}
-                          onChange={handleChangeAvatar}
-                        /> */}
                       <input
                         type='file'
                         onChange={handleChangeAvatar}
+                        accept='image/*'
                         required
                       />
                     </div>
@@ -327,33 +203,30 @@ const AddProject = () => {
                 <br />
                 <div>
                   <label>
-                    Categorie<StyleSpan> *</StyleSpan>
+                    {t('addData.ajProj.label5')}
+                    <StyleSpan> *</StyleSpan>
                   </label>
-                  <div>
-                    Pour aider les contributeurs à trouver votre campagne,
-                    sélectionnez une catégorie qui représente le mieux votre
-                    projet.
-                  </div>
+                  <div>{t('addData.ajProj.label5Desc')}</div>
                   <StyleSelect
                     value={selectValue}
                     placeholder='Select a category'
                     onChange={handleChangeSelect}
                     required
                   >
-                    {options.map(option => (
-                      // eslint-disable-next-line react/jsx-key
-                      <option value={option.value}>{option.label}</option>
+                    {options.map((option, index) => (
+                      <option key={index} value={option.value}>
+                        {option.label}
+                      </option>
                     ))}
                   </StyleSelect>
                 </div>
                 <br />
                 <div>
                   <label>
-                    Durée de la campagne<StyleSpan> *</StyleSpan>
+                    {t('addData.ajProj.label6')}
+                    <StyleSpan> *</StyleSpan>
                   </label>
-                  <div>
-                    Pendant combien de temps allez-vous diffuser votre campagne?
-                  </div>
+                  <div>{t('addData.ajProj.label6Desc')}</div>
                   <StyleInput
                     type='datetime-local'
                     value={durationValue}
@@ -364,7 +237,7 @@ const AddProject = () => {
               </div>
               <StyleImageUploadProgress value={progress} max='100' />
               <div>
-                <StyleInput type='submit' value='Save & Continue' />
+                <StyleInput type='submit' value={t('addData.ajProj.butt')} />
               </div>
             </form>
           </DivG>

@@ -1,37 +1,47 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { useHistory } from 'react-router-dom'
-
-import styled from 'styled-components'
+import { auth } from '../../config/firebase'
+import Logo from '../logo'
+import { useSelector, useDispatch } from 'react-redux'
+import { addUser } from '../../actions/user'
+import { Buttons, StyledForm, Input } from './indexStyle'
 
 const LoginFrom = () => {
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const history = useHistory()
-  var token = localStorage
+  const user = useSelector(state => state.user.userValue)
+  const dispatch = useDispatch()
+
+  function signInWithEmailPassword(email, password) {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        // Signed in
+        var user = userCredential.user
+        dispatch(addUser({ email: user.email, uid: user.uid }))
+
+        localStorage.setItem(
+          'user',
+          JSON.stringify({ email: user.email, uid: user.uid })
+        )
+        history.push('/home')
+      })
+      .catch(error => {
+        var errorMessage = error.message
+        console.log('error: ', errorMessage)
+      })
+    // [END auth_signin_password]
+  }
 
   const sendForm = e => {
     e.preventDefault()
     // verify is had a usename and a password
     if (userName && password) {
       //console.log(userName + ' ' + password)
-      axios
-        // login with a login api
-        .post('https://easy-login-api.herokuapp.com/users/login', {
-          username: userName,
-          password: password
-        })
-        // set the token and a user into localStorage then push it into /home
-        .then(response => {
-          console.log(response)
-          token.setItem('token', response.headers['x-access-token'])
-          token.setItem('username', userName)
-          history.push('/home')
-        })
-        // catch error
-        .catch(err => {
-          console.log(err)
-        })
+      signInWithEmailPassword(userName, password)
+      console.log('user :', user)
+
       // if we don't set username and password so... put an alert
     } else if (!userName && !password) {
       alert('Les champs ne doivent pas être vide !!!')
@@ -42,9 +52,11 @@ const LoginFrom = () => {
     // input form
     <StyledForm>
       {/* Input username */}
+      <Logo />
       <Input
-        placeholder='Nom d’utilisateur'
-        type='text'
+        placeholder='Email'
+        type='email'
+        required
         value={userName}
         onChange={e => setUserName(e.target.value)}
       />
@@ -52,53 +64,14 @@ const LoginFrom = () => {
       <Input
         placeholder='Mot de passe'
         type='password'
+        required
         value={password}
         onChange={e => setPassword(e.target.value)}
       ></Input>
       <Buttons onClick={sendForm}>Connexion</Buttons>
+      <a href='/signup'>S&apos;inscrire</a>
     </StyledForm>
   )
 }
-// CSS for Button
-const Buttons = styled.button`
-  max-width: 100%;
-  margin-bottom: 40px;
-  margin-right: 10%;
-  margin-left: 10%;
-
-  margin-top: 20px;
-  padding: 20px 6px 20px 6px; /*Make this smaller for 100% responsiveness*/
-  box-sizing: border-box;
-  border-color: #bbb;
-  border: 1px solid #ff0f00;
-  color: #fff;
-  border-radius: 3px;
-  color: black;
-  background: #ff0f00;
-  float: center;
-  text-align: center;
-`
-//CSS for a form
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-`
-//CSS for Input
-const Input = styled.input`
-  max-width: 100%;
-  margin-bottom: 40px;
-  margin-right: 10%;
-  margin-left: 10%;
-
-  margin-top: 20px;
-  padding: 20px 6px 20px 6px; /*Make this smaller for 100% responsiveness*/
-  border: 1px solid #efefef;
-  border-radius: 3px;
-  box-sizing: border-box;
-  border-color: #bbb;
-  color: black;
-  float: center;
-  text-align: center;
-`
 
 export default LoginFrom

@@ -1,0 +1,101 @@
+{
+  "translation": {
+    "days":"days left",
+    "project": "Add a project",
+    "logout": "Logout",
+    "ban1":{
+      "title": "Olive Pro - 2 in 1 Bluetooth hearing aids and earpieces",
+      "desc1": "Improved hearing for sounds, music and conversations.",
+      "desc2": "Affordable hearing for everyone."
+    },
+    "ban2":{
+      "title": "inCharge X - The Swiss Army knife of 100W cables",
+      "desc1": "The most crowdfunded cable is back! Tiny,",
+      "desc2": "Universal, Ultra Powerful Cable."
+    },
+    "ban3":{
+      "title": "Aura Mate Pro - The best updated premium scanner ever",
+      "desc1": "Dual Camera, Document Camera, Zoom Use, 16 MegaPixel.",
+      "desc2": "Curve Flattening Technology, Scan a book in 8 minutes."
+    },
+    "ban4":{
+      "title": "Phantom - The direct drive electric skateboard",
+      "desc1": "30 MPH, 48 km range. New generation 21700 Lithium",
+      "desc2": "A carbon fiber battery and drop deck you can count on."
+    },
+    "ban5":{
+      "title": "Flynova Pro - Boomerang spinner with infinite spins!",
+      "desc1": "Dynamic lights｜Safe for kids｜Shock resistant｜",
+      "desc2": "Long battery life."
+    },
+    "projpop": "Popular projects",
+    "financement": "Ongoing funding",
+    "bannerC":{
+      "title": "Support the project, take the road",
+      "desc": "YnovFunding is your destination for smart innovations in technology, design, with special benefits and prizes. Support a campaign, share your ideas and feedback with the project team.",
+      "info": "GET INFORMED ABOUT CROWDFUNDING"
+    },
+    "explorer":{
+      "title": "EXPLORE",
+      "desc1": "What we do",
+      "desc2": "YnovFunding"
+    },
+    "about":{
+      "title": "ABOUT",
+      "desc1": "About us",
+      "desc2": "Blog",
+      "desc3": "Contact"
+    },
+    "decouvrir":{
+      "title": "Discover it first on YnovFunding",
+      "desc1": "Discover new and clever products in the YnovFunding newsletter",
+      "desc2": "GET INFORMED ABOUT CROWDFUNDING", 
+      "holder": "Your email address",
+      "enregistrer": "Register"
+    },
+    "copyright":"© 2021 YnovFunding. All rights reserved",
+    "campaign":{
+      "title": "Welcome to YnovFunding",
+      "ajProj":{
+        "title": "Add a project",
+        "desc": "YnovFunding is a crowdfunding platform that helps ideas come to life.",
+        "frais": "fees: 5%"
+      },
+      "don":{
+        "title": "Make a donation",
+        "frais": "no fees"
+      },
+      "info": "All YnovFunding projects are required to provide banking information and identification. This information is used to prevent fraud, comply with the law and disburse project funds."
+    },
+    "addData":{
+      "title": "Get ready to launch your campaign!",
+      "desc": "We want to create the best onboarding for you. Please fill in the information below. Your answers will be locked for this campaign and cannot be changed later.",
+      "ajProj":{
+        "title": "Make a good first impression:",
+        "desc": "Introduce the objectives of your campaign and encourage people to find out more. This basic information will represent your campaign on your campaign page, on your campaign map.",
+
+        "label1": "Campaign title",
+        "label2": "Campaign description",
+        "label2Desc": "Provide a brief description that best describes your campaign to your audience",
+        "label3": "How much money would you like to raise? (currency: EUR)",
+        "label3Desc": "500€ Minimum.",
+
+        "label4": "Campaign image",
+        "label4Desc1": "Import an image that represents your campaign",
+        "label4Desc2": "Recommended resolution 640 x 640, minimum resolution 220 x 220",
+        "label5": "Category",
+        "label5Desc": "To help contributors find your campaign, select a category that best represents your project",
+        "label6": "Campaign duration",
+        "label6Desc": "How long will you run your campaign?",
+
+        "butt": "Save and continue"
+      }
+    },
+    "gived":{
+      "title": "Fundraising for the people and causes we care about",
+      "desc": "We want to help all entrepreneurs to realise the projects that are important to them. The money you donate will go to projects that have not been able to be completed due to lack of funding.",
+      "info": "Today we are at",
+      "mntDesc": "How much do you want to donate ?"
+    }
+  }
+}
