@@ -2,14 +2,12 @@ import firebase from 'firebase'
 import 'firebase/messaging'
 
 const firebaseApp = firebase.initializeApp({
-  apiKey: 'AIzaSyCtcMc4lRolHBkdvMBvxBp4uR6QIs_yRhU',
-  authDomain: 'ynov-crowdfunding.firebaseapp.com',
-  databaseURL:
-    'https://ynov-crowdfunding-default-rtdb.europe-west1.firebasedatabase.app',
-  projectId: 'ynov-crowdfunding',
-  storageBucket: 'ynov-crowdfunding.appspot.com',
-  messagingSenderId: '293952176867',
-  appId: '1:293952176867:web:213c349b7fdba8200e7bd6',
+  apiKey: "AIzaSyCvoKurpLaU4xSXD58g4dmM2iR6Qh-XRUU",
+  authDomain: "ynov-crowdfunding-fe14a.firebaseapp.com",
+  projectId: "ynov-crowdfunding-fe14a",
+  storageBucket: "ynov-crowdfunding-fe14a.appspot.com",
+  messagingSenderId: "626974305988",
+  appId: "1:626974305988:web:d5b39fa886887fff43a391",
   measurementId: 'G-KNXQH1LNK8'
 })
 
